@@ -5,6 +5,7 @@ import { MembershipTeaser, MixtapePreview, GalleryStrip, ArticlesBlock, Footer }
 import { MembershipForm, RSVPForm } from './components/Forms'
 import CouponRibbon from './components/CouponRibbon'
 import AdminVerify from './components/AdminVerify'
+import Calendar from './components/Calendar'
 import './index.css'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <RSVPForm />
           </div>
         </section>
+        <Calendar />
         <MembershipTeaser />
         <MixtapePreview />
         <GalleryStrip />
