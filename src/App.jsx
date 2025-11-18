@@ -7,6 +7,7 @@ import CouponRibbon from './components/CouponRibbon'
 import AdminVerify from './components/AdminVerify'
 import Calendar from './components/Calendar'
 import './index.css'
+import { Link } from 'react-router-dom'
 
 function App() {
   return (
@@ -26,7 +27,15 @@ function App() {
         <MembershipTeaser />
         <MixtapePreview />
         <GalleryStrip />
-        <ArticlesBlock />
+        <section id="articles" className="bg-black border-t border-neutral-900">
+          <div className="max-w-7xl mx-auto px-6 py-16">
+            <div className="flex items-end justify-between mb-8">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Articles & Features</h2>
+              <Link to="/articles" className="text-red-500 hover:text-red-400 text-sm uppercase tracking-wider">View All</Link>
+            </div>
+            <ArticlesBlock />
+          </div>
+        </section>
         <AdminVerify />
       </main>
       <Footer />
