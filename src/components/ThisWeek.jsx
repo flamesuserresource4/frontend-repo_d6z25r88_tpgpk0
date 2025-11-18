@@ -1,4 +1,22 @@
+import { useEffect, useState } from 'react'
+
 export default function ThisWeek() {
+  const [event, setEvent] = useState(null)
+  const baseUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000'
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`${baseUrl}/api/events?featured=true`)
+        const data = await res.json()
+        if (Array.isArray(data) && data.length > 0) setEvent(data[0])
+      } catch (e) {
+        // silent
+      }
+    }
+    load()
+  }, [])
+
   return (
     <section id="events" className="bg-black border-t border-neutral-900">
       <div className="max-w-7xl mx-auto px-6 py-16">
@@ -20,11 +38,21 @@ export default function ThisWeek() {
 
           <div className="bg-neutral-950 border border-neutral-800 p-6 flex flex-col">
             <div>
-              <p className="text-red-500 uppercase tracking-widest text-xs">Theme</p>
-              <h3 className="mt-2 text-white text-3xl font-extrabold">90s vs 2000s: Throwback Anthems</h3>
-              <p className="mt-3 text-neutral-300">DJs: Chromatic, Bishop Escobar, CopperShot, ZJ Liquid</p>
+              <p className="text-red-500 uppercase tracking-widest text-xs">{event?.theme || 'Theme'}</p>
+              <h3 className="mt-2 text-white text-3xl font-extrabold">{event?.title || 'Event Title'}</h3>
+              <p className="mt-3 text-neutral-300">
+                {event ? (
+                  <>
+                    {new Date(event.date).toLocaleString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
+                    {event.venue_name ? ` • ${event.venue_name}` : ''}
+                    {event.venue_address ? `, ${event.venue_address}` : ''}
+                    <br />
+                    DJs: {event.djs?.join(', ')}
+                  </>
+                ) : 'Loading lineup…'}
+              </p>
               <div className="mt-4 flex flex-wrap gap-2">
-                {['#hiphop', '#dancehall', '#club', '#throwback'].map(t => (
+                {(event?.tags || ['#hiphop', '#kingston']).map(t => (
                   <span key={t} className="text-xs text-neutral-300 bg-neutral-900 border border-neutral-800 px-2 py-1">{t}</span>
                 ))}
               </div>
