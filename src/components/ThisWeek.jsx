@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function ThisWeek() {
   const [event, setEvent] = useState(null)
@@ -17,12 +18,18 @@ export default function ThisWeek() {
     load()
   }, [])
 
+  const detailHref = event?.slug ? `/event/${event.slug}` : '#'
+
   return (
     <section id="events" className="bg-black border-t border-neutral-900">
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="flex items-end justify-between mb-8">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white">This Week’s Energy</h2>
-          <a href="#" className="text-red-500 hover:text-red-400 text-sm uppercase tracking-wider">See Event Details</a>
+          {event?.slug ? (
+            <Link to={detailHref} className="text-red-500 hover:text-red-400 text-sm uppercase tracking-wider">See Event Details</Link>
+          ) : (
+            <a href="#" className="text-red-500 hover:text-red-400 text-sm uppercase tracking-wider">See Event Details</a>
+          )}
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 items-stretch">
@@ -58,7 +65,11 @@ export default function ThisWeek() {
               </div>
             </div>
             <div className="mt-auto pt-8">
-              <a href="#rsvp" className="inline-block px-5 py-3 bg-red-600 hover:bg-red-500 text-white font-semibold uppercase tracking-wider transition">RSVP Now</a>
+              {event?.slug ? (
+                <Link to={detailHref} className="inline-block px-5 py-3 bg-red-600 hover:bg-red-500 text-white font-semibold uppercase tracking-wider transition">RSVP Now</Link>
+              ) : (
+                <a href="#rsvp" className="inline-block px-5 py-3 bg-red-600 hover:bg-red-500 text-white font-semibold uppercase tracking-wider transition">RSVP Now</a>
+              )}
             </div>
           </div>
         </div>
